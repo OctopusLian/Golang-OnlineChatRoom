@@ -17,11 +17,9 @@ func main() {
 	fmt.Println("client connect server successed \n")
 
 	var nickname string
-	fmt.Println("请输入您在聊天室中要显示的昵称：")
+	fmt.Println("请输入您在聊天室中要显示的昵称（记得在昵称结束时加|）：")
 	fmt.Scan(&nickname)
 	fmt.Println("hello,welcome to online chat room :",nickname)
-	conn.Write([]byte("nickname|" + nickname))
-
 	go CliHandle(conn)
 
 	for{
@@ -38,7 +36,7 @@ func main() {
 			log.Fatal("marshaling error:",err)
 		}
 
-		conn.Write(data)
+		conn.Write(data)  //拼接两个字节格式的数据
 
 		if datamsg == "quit"{
 			conn.Write([]byte(datamsg + nickname))
@@ -55,6 +53,13 @@ func CliHandle(conn net.Conn){
 			if msgdata_read == 0 || err != nil{
 				break
 			}
-			fmt.Println(string(msgdata[0:msgdata_read]))
+			//对接收到的数据进行解码
+			newTest := &protocol.Conn_ToS{}
+			err = proto.Unmarshal(msgdata[0:msgdata_read],newTest)
+			if err != nil{
+				log.Fatal("unmarshaling error:",err)
+			}
+
+			fmt.Println(newTest.GetNickname(),newTest.GetMsg())
 	}
 }
