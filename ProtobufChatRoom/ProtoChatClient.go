@@ -24,29 +24,30 @@ func main() {
 
 	go CliHandle(conn)
 
-	testmsg := &protocol.Conn_ToS{
-		Nickname:proto.String("abc"),
-		Msg:proto.String("hello everybody"),
-	}
-
-	data,err := proto.Marshal(testmsg)
-	if err != nil{
-		log.Fatal("marshaling error:",err)
-	}
-
 	for{
+			var datamsg string
+			fmt.Println("请输入你要群发的消息：")
+			fmt.Scan(&datamsg)
+
+			testmsg := &protocol.Conn_ToS{
+			Nickname:proto.String(nickname),
+			Msg:proto.String(datamsg),
+		}
+		data,err := proto.Marshal(testmsg)
+		if err != nil{
+			log.Fatal("marshaling error:",err)
+		}
+
 		conn.Write(data)
+
+		if datamsg == "quit"{
+			conn.Write([]byte(datamsg + nickname))
+			break
+		}
 	}
-
-	newtestmsg := &protocol.Conn_ToS{}
-	err = proto.Unmarshal(data,newtestmsg)
-	if err != nil{
-		log.Fatal("unmarshling error:",err)
-	}
-
-
 }
 
+//客户端接收消息
 func CliHandle(conn net.Conn){
 	for{
 			msgdata := make([]byte,255)

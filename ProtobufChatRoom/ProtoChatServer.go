@@ -29,6 +29,8 @@ func main() {
 }
 
 func ServHandle(conn net.Conn){
+
+
 	for{
 		datamsg := make([]byte,255)
 		datamsg_read ,err := conn.Read(datamsg)
@@ -36,5 +38,21 @@ func ServHandle(conn net.Conn){
 			continue
 		}
 		fmt.Println(datamsg)
+		/*
+		newtestmsg := &protocol.Conn_ToS{}
+		err = proto.Unmarshal(datamsg,newtestmsg)
+		if err != nil{
+			log.Fatal("unmarshling error:",err)
+		}*/
+		/*
+		data := &protocol.Conn_ToC{
+			Nickname:proto.String(nickname),
+			Msg:proto.String(),
+		}
+		data,err := proto.Marshal(testmsg)
+		if err != nil{
+			log.Fatal("marshaling error:",err)
+		}*/
+		conn.Write(datamsg)
 	}
 }

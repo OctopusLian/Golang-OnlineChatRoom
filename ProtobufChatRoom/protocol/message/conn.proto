@@ -2,11 +2,11 @@ syntax = "proto2";
 package protocol;
 
 message conn_ToS{
-    required string nickname = 1;
-    required string msg = 2;
-}
+     required string nickname = 1;
+     required string msg = 2;
+ }
 
-message conn_ToC{
-    required string nickname = 1;
-    required string msg = 2;
-}
+ message conn_ToC{
+     required string nickname = 1;
+     required string msg = 2;
+ }
