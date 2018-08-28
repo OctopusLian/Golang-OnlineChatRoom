@@ -17,7 +17,7 @@ func main() {
 	fmt.Println("client connect server successed \n")
 
 	var nickname string
-	fmt.Println("请输入您在聊天室中要显示的昵称（记得在昵称结束时加|）：")
+	fmt.Println("请输入您在聊天室中要显示的昵称：")
 	fmt.Scan(&nickname)
 	fmt.Println("hello,welcome to online chat room :",nickname)
 	go CliHandle(conn)
@@ -31,7 +31,7 @@ func main() {
 			Nickname:proto.String(nickname),
 			Msg:proto.String(datamsg),
 		}
-		data,err := proto.Marshal(testmsg)
+		data,err := proto.Marshal(testmsg) //对要发送的数据进行编码
 		if err != nil{
 			log.Fatal("marshaling error:",err)
 		}
