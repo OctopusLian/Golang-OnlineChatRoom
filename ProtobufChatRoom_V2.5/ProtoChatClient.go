@@ -3,8 +3,8 @@ package main
 import (
 	"net"
 	"fmt"
-	"Golang-OnlineChatRoom/ProtobufChatRoom/protocol"
-	"Golang-OnlineChatRoom/ProtobufChatRoom/github.com/golang/protobuf/proto"
+	"Golang-OnlineChatRoom/ProtobufChatRoom_V2.5/protocol"
+	"Golang-OnlineChatRoom/ProtobufChatRoom_V2.5/github.com/golang/protobuf/proto"
 	"log"
 )
 
